@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Movie Recommendations</h1>
+    {% include 'recommendation/includes/search.html.twig' %}
+    {% for recommendation in recommendations %}
+        <ul>
+            <li>
+                {% include 'recommendation/includes/instance.html.twig' with { recommendation: recommendation } %}
+            </li>
+        </ul>
+    {% else %}
+        <p>No movie recommendations</p>
+    {% endfor %}
+{% endblock %}

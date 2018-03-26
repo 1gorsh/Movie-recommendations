@@ -3,39 +3,45 @@ declare(strict_types = 1);
 
 namespace App\Controller;
 
+use App\Model\Genre;
+use App\Model\Recommendations;
 use App\Service\RecommendationApi\ApiException;
-use App\Service\RecommendationApi\RecommendationApi;
-use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Model\RecommendationsNotFound;
+use Twig\Environment;
 
 /**
- * @Route("/recommendations/{genre}/{time}")
+ * @Route("/recommendations")
  */
 final class Recommendation
 {
     /**
-     * @param string $genre
-     * @param string $time
-     * @param RecommendationApi $api
+     * @param Request $request
+     * @param Recommendations $recommendationsRepository
+     * @param Environment $twig
      * @return Response
      */
-    public function __invoke(string $genre, string $time, RecommendationApi $api): Response
+    public function __invoke(Request $request, Recommendations $recommendationsRepository, Environment $twig): Response
     {
         try {
-            $recommendations = new ArrayCollection($api->getRecommendations());
-            dump(
-                $recommendations
-                    ->filter(function($item) {
-                        return in_array('Comedy', $item['genres'], true);
-                    })
-            );
+            $genre = new Genre($request->query->get('genre', ''));
+            $recommendations = $recommendationsRepository
+                ->findByGenre($genre)
+                ->toArray();
         } catch(ApiException|\RuntimeException $e) {
-            // would be good to add some flash message
+            // would be good to add some flash message about api communication/bad response problem
+            $recommendations = [];
+        } catch(RecommendationsNotFound|\InvalidArgumentException $e) {
+            // would be good to add some flash message that there are no results
             $recommendations = [];
         }
 
-        return new JsonResponse($recommendations);
+        $html = $twig->render('recommendation/list.html.twig', [
+            'recommendations' => $recommendations,
+        ]);
+
+        return new Response($html);
     }
 }

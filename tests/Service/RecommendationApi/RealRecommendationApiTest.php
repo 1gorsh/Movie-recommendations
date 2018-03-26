@@ -3,8 +3,11 @@ declare(strict_types = 1);
 
 namespace App\Tests\Service\RecommendationApi;
 
+use App\Model\Movie;
+use App\Repository\MovieHydrator;
 use App\Service\HttpClient\HttpClient;
 use App\Service\HttpClient\HttpRequestFailed;
+use Doctrine\Common\Collections\ArrayCollection;
 use Psr\Log\LoggerInterface;
 use App\Service\RecommendationApi\RealRecommendationApi;
 use PHPUnit\Framework\TestCase;
@@ -12,10 +15,23 @@ use PHPUnit\Framework\TestCase;
 
 class RealRecommendationApiTest extends TestCase
 {
+    const API_URL = 'https://somecoolapi.com';
+
+    private $httpClient;
+    private $logger;
+    private $hydrator;
+
+    protected function setUp()
+    {
+        $this->httpClient = $this->prophesize(HttpClient::class);
+        $this->logger = $this->prophesize(LoggerInterface::class);
+        $this->hydrator = $this->prophesize(MovieHydrator::class);
+    }
+
+
     /** @test */
     public function itReturnsRecommendationCorrectly()
     {
-        $url = 'https://somecoolapi.com';
         $response = <<<RESPONSE
 [
     {
@@ -45,19 +61,21 @@ class RealRecommendationApiTest extends TestCase
 ]
 RESPONSE;
 
-        $httpClient = $this->prophesize(HttpClient::class);
-        $httpClient->get($url)->willReturn($response);
+        $this->httpClient->get(self::API_URL)->willReturn($response);
 
-        $logger = $this->prophesize(LoggerInterface::class);
+        $recommendationApi = new RealRecommendationApi(
+            self::API_URL,
+            $this->httpClient->reveal(),
+            new MovieHydrator($this->logger->reveal()),
+            $this->logger->reveal()
+        );
 
-        $recommendationApi = new RealRecommendationApi($url, $httpClient->reveal(), $logger->reveal());
-
+        /** @var ArrayCollection $recommendations */
         $recommendations = $recommendationApi->getRecommendations();
 
-        $this->assertSame(
-            json_decode($response, true),
-            $recommendations
-        );
+        $this->assertCount(2, $recommendations);
+        $this->assertInstanceOf(Movie::class, $recommendations->first());
+        $this->assertInstanceOf(Movie::class, $recommendations->last());
     }
 
     /**
@@ -66,12 +84,14 @@ RESPONSE;
      */
     public function itThrowsAnExceptionWhenTheHttpRequestFails()
     {
-        $url = 'https://somebadapi.com';
-        $httpClient = $this->prophesize(HttpClient::class);
-        $httpClient->get($url)->willThrow(HttpRequestFailed::class);
-        $logger = $this->prophesize(LoggerInterface::class);
+        $this->httpClient->get(self::API_URL)->willThrow(HttpRequestFailed::class);
 
-        $recommendationApi = new RealRecommendationApi($url, $httpClient->reveal(), $logger->reveal());
+        $recommendationApi = new RealRecommendationApi(
+            self::API_URL,
+            $this->httpClient->reveal(),
+            $this->hydrator->reveal(),
+            $this->logger->reveal()
+        );
 
         $recommendationApi->getRecommendations();
     }
@@ -82,15 +102,16 @@ RESPONSE;
      */
     public function itThrowsAnExceptionWhenBadJsonHasBeenReturnedFromApi()
     {
-        $url = 'https://somebadapi.com';
         $response = '[{"name": "Moonlight",';
-        $httpClient = $this->prophesize(HttpClient::class);
-        $httpClient->get($url)->willReturn($response);
-        $logger = $this->prophesize(LoggerInterface::class);
+        $this->httpClient->get(self::API_URL)->willReturn($response);
 
-        $recommendationApi = new RealRecommendationApi($url, $httpClient->reveal(), $logger->reveal());
+        $recommendationApi = new RealRecommendationApi(
+            self::API_URL,
+            $this->httpClient->reveal(),
+            $this->hydrator->reveal(),
+            $this->logger->reveal()
+        );
 
         $recommendationApi->getRecommendations();
     }
-
 }

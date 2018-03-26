@@ -16,7 +16,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{Model,Entity,Migrations,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -33,3 +33,5 @@ services:
             $url: "%api_url%"
 
     App\Service\RecommendationApi\RecommendationApi: '@App\Service\RecommendationApi\RealRecommendationApi'
+
+    App\Model\Recommendations: '@App\Repository\InMemoryRecommendations'
