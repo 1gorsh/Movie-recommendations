@@ -74,6 +74,7 @@ RESPONSE;
         $recommendations = $recommendationApi->getRecommendations();
 
         $this->assertCount(2, $recommendations);
+        $this->assertInstanceOf(ArrayCollection::class, $recommendations);
         $this->assertInstanceOf(Movie::class, $recommendations->first());
         $this->assertInstanceOf(Movie::class, $recommendations->last());
     }

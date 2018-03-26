@@ -19,7 +19,7 @@ final class MovieName
         $nameLength = mb_strlen($name);
         if ($nameLength < self::MIN_NAME_LENGTH || $nameLength > self::MAX_NAME_LENGTH) {
             throw new \InvalidArgumentException(sprintf(
-                'Movie name must be between %s ans %s characters',
+                'Movie name must be between %s and %s characters',
                 self::MIN_NAME_LENGTH,
                 self::MAX_NAME_LENGTH
             ));
