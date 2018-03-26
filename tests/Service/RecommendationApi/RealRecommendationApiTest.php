@@ -76,4 +76,21 @@ RESPONSE;
         $recommendationApi->getRecommendations();
     }
 
+    /**
+     * @test
+     * @expectedException \RuntimeException
+     */
+    public function itThrowsAnExceptionWhenBadJsonHasBeenReturnedFromApi()
+    {
+        $url = 'https://somebadapi.com';
+        $response = '[{"name": "Moonlight",';
+        $httpClient = $this->prophesize(HttpClient::class);
+        $httpClient->get($url)->willReturn($response);
+        $logger = $this->prophesize(LoggerInterface::class);
+
+        $recommendationApi = new RealRecommendationApi($url, $httpClient->reveal(), $logger->reveal());
+
+        $recommendationApi->getRecommendations();
+    }
+
 }

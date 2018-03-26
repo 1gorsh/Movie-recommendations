@@ -33,7 +33,7 @@ final class RealRecommendationApi implements RecommendationApi
 
     /**
      * @return iterable
-     * @throws ApiException
+     * @throws ApiException|\RuntimeException
      */
     public function getRecommendations(): iterable
     {
@@ -45,6 +45,12 @@ final class RealRecommendationApi implements RecommendationApi
             throw new ApiException;
         }
 
-        return json_decode($recommendations, true);
+        $recommendations = json_decode($recommendations, true);
+
+        if (null === $recommendations || json_last_error() !== JSON_ERROR_NONE) {
+            throw new \RuntimeException;
+        }
+
+        return $recommendations;
     }
 }

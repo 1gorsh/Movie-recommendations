@@ -5,20 +5,33 @@ namespace App\Controller;
 
 use App\Service\RecommendationApi\ApiException;
 use App\Service\RecommendationApi\RecommendationApi;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/")
+ * @Route("/recommendations/{genre}/{time}")
  */
 final class Recommendation
 {
-    public function __invoke(RecommendationApi $api): Response
+    /**
+     * @param string $genre
+     * @param string $time
+     * @param RecommendationApi $api
+     * @return Response
+     */
+    public function __invoke(string $genre, string $time, RecommendationApi $api): Response
     {
         try {
-            $recommendations = $api->getRecommendations();
-        } catch(ApiException $e) {
+            $recommendations = new ArrayCollection($api->getRecommendations());
+            dump(
+                $recommendations
+                    ->filter(function($item) {
+                        return in_array('Comedy', $item['genres'], true);
+                    })
+            );
+        } catch(ApiException|\RuntimeException $e) {
             // would be good to add some flash message
             $recommendations = [];
         }
