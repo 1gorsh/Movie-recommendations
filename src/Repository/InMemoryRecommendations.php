@@ -33,11 +33,11 @@ class InMemoryRecommendations implements Recommendations
         $this->recommendations->add($movie);
     }
 
-    public function findByGenre(Genre $genre): iterable
+    public function findByGenreAndTime(Genre $genre, \DateTimeImmutable $dateTime): iterable
     {
-        $recommendations = $this->recommendations->filter(function($movie) use ($genre) {
+        $recommendations = $this->recommendations->filter(function($movie) use ($genre, $dateTime) {
             /** @var Movie $movie */
-            return $movie->belongsToGenre($genre);
+            return $movie->belongsToGenre($genre) && $movie->isAvailableToWatch($dateTime);
         });
 
         if (count($recommendations) < 1) {

@@ -1,7 +1,6 @@
-Name: {{ recommendation.name }}<br>
-rating: {{ recommendation.rating }}<br>
-genres: {{ recommendation.genres|join(', ') }}<br>
-showings:
+<b>{{ recommendation.name }}</b>, showings at
 {% for showing in recommendation.showings %}
-    {{ showing|date('H:i:s') }}{% if not loop.last %}, {% endif %}
+    {{ showing|date('h:i a') }}{% if not loop.last %}, {% endif %}
 {% endfor %}
+<br>
+rating: {{ recommendation.rating }}, genres: <i>{{ recommendation.genres|join(', ') }}</i>

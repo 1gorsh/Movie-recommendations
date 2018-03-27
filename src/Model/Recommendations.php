@@ -13,8 +13,9 @@ interface Recommendations
 
     /**
      * @param Genre $genre
+     * @param \DateTimeImmutable $dateTime
      * @return iterable
      * @throws RecommendationsNotFound
      */
-    public function findByGenre(Genre $genre): iterable;
+    public function findByGenreAndTime(Genre $genre, \DateTimeImmutable $dateTime): iterable;
 }

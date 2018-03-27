@@ -1,7 +1,21 @@
 # Movie recommendations
 
-## Run server
-`php -S localhost:8001 -t public` from project dir then go to `http://localhost:8001/recommendations`
+Simply a demo application built using Symfony4.
+
+Requires PHP 7.1+
+
+## Usage
+
+```bash
+$ git clone git@github.com:ishubelko/Movie-recommendations.git
+$ cd movie-recommendations
+$ composer install
+$ composer serve
+```
+
+Then visit [localhost:8080](http://localhost:8080/recommendations).
 
 ## Run tests
-`bin/phpunit`
+```bash
+composer test
+```

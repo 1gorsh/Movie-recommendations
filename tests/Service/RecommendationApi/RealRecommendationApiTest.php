@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Tests\Service\RecommendationApi;
 
 use App\Model\Movie;
+use App\Repository\Hydrator;
 use App\Repository\MovieHydrator;
 use App\Service\HttpClient\HttpClient;
 use App\Service\HttpClient\HttpRequestFailed;
@@ -25,7 +26,7 @@ class RealRecommendationApiTest extends TestCase
     {
         $this->httpClient = $this->prophesize(HttpClient::class);
         $this->logger = $this->prophesize(LoggerInterface::class);
-        $this->hydrator = $this->prophesize(MovieHydrator::class);
+        $this->hydrator = $this->prophesize(Hydrator::class);
     }
 
 

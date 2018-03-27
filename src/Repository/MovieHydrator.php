@@ -8,16 +8,16 @@ use App\Model\Movie;
 use App\Model\MovieName;
 use Psr\Log\LoggerInterface;
 
-class MovieHydrator
+final class MovieHydrator implements Hydrator
 {
     /**
      * @var LoggerInterface
      */
-    private $loger;
+    private $logger;
 
-    public function __construct(LoggerInterface $loger)
+    public function __construct(LoggerInterface $logger)
     {
-        $this->loger = $loger;
+        $this->logger = $logger;
     }
 
     /**

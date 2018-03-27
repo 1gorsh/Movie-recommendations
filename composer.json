@@ -19,7 +19,8 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "process-timeout": 0
     },
     "autoload": {
         "psr-4": {
@@ -47,7 +48,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "serve": "php -S 0.0.0.0:8080 -t public/",
+        "test": "bin/phpunit --colors=always"
     },
     "conflict": {
         "symfony/symfony": "*"

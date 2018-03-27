@@ -100,4 +100,22 @@ final class Movie
     {
         $this->showings->add($dateTimeImmutable);
     }
+
+    /**
+     * @param \DateTimeImmutable $dateTime
+     * @return bool
+     */
+    public function isAvailableToWatch(\DateTimeImmutable $dateTime): bool
+    {
+        $showings = $this->showings->filter(function($showing) use ($dateTime) {
+            $diff = $dateTime->diff($showing);
+
+            // days converted to minutes + hours converted to minutes + minutes
+            $minutes = ($diff->format('%a') * 1440) + ($diff->format('%h') * 60) + $diff->format('%i');
+
+            return $minutes >= 30;
+        });
+
+        return count($showings) > 0;
+    }
 }

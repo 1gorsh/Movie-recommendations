@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Service\RecommendationApi;
 
-use App\Repository\MovieHydrator;
+use App\Repository\Hydrator;
 use App\Service\HttpClient\HttpClient;
 use App\Service\HttpClient\HttpRequestFailed;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -34,7 +34,7 @@ final class RealRecommendationApi implements RecommendationApi
     public function __construct(
         string $url,
         HttpClient $httpClient,
-        MovieHydrator $hydrator,
+        Hydrator $hydrator,
         LoggerInterface $logger
     ){
         $this->url = $url;

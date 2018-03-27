@@ -18,6 +18,7 @@ use Twig\Environment;
 final class Recommendation
 {
     /**
+     * Movie Recommendations http handler
      * @param Request $request
      * @param Recommendations $recommendationsRepository
      * @param Environment $twig
@@ -27,8 +28,9 @@ final class Recommendation
     {
         try {
             $genre = new Genre($request->query->get('genre', ''));
+            $dateTime = new \DateTimeImmutable($request->query->get('time', 'now'));
             $recommendations = $recommendationsRepository
-                ->findByGenre($genre)
+                ->findByGenreAndTime($genre, $dateTime)
                 ->toArray();
         } catch(ApiException|\RuntimeException $e) {
             // would be good to add some flash message about api communication/bad response problem
