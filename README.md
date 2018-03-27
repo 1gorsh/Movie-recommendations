@@ -1,6 +1,6 @@
 # Movie recommendations
 
-Simply demo application built using Symfony4
+Simply a demo application built using Symfony4
 
 Requires PHP 7.1+
 
