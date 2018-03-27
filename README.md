@@ -1,6 +1,6 @@
 # Movie recommendations
 
-Simply a demo application built using Symfony4.
+Simply demo application built using Symfony4
 
 Requires PHP 7.1+
 
@@ -13,7 +13,7 @@ $ composer install
 $ composer serve
 ```
 
-Then visit [localhost:8080](http://localhost:8080/recommendations).
+Then visit [localhost:8080/recommendations](http://localhost:8080/recommendations).
 
 ## Run tests
 ```bash

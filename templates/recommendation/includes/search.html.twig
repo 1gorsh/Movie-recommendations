@@ -1,11 +1,11 @@
 <form>
-    <select name="genre">
+    <select id="genre-select" name="genre">
         <option value="Action & Adventure">Action & Adventure</option>
         <option value="Animation">Animation</option>
         <option value="Comedy">Comedy</option>
         <option value="Drama">Drama</option>
         <option value="Science Fiction & Fantasy">Science Fiction & Fantasy</option>
     </select>
-    <input name="time" type="time" value="{{ 'now'|date('H:i') }}">
-    <button type="submit">Search</button>
+    <input id="showing-time" name="time" type="time" value="{{ 'now'|date('H:i') }}">
+    <button id="search-submit" type="submit">Search</button>
 </form>

@@ -30,8 +30,7 @@ final class Recommendation
             $genre = new Genre($request->query->get('genre', ''));
             $dateTime = new \DateTimeImmutable($request->query->get('time', 'now'));
             $recommendations = $recommendationsRepository
-                ->findByGenreAndTime($genre, $dateTime)
-                ->toArray();
+                ->findByGenreAndTime($genre, $dateTime);
         } catch(ApiException|\RuntimeException $e) {
             // would be good to add some flash message about api communication/bad response problem
             $recommendations = [];

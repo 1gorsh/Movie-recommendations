@@ -1,4 +1,28 @@
 {
+    "behat/behat": {
+        "version": "v3.4.3"
+    },
+    "behat/gherkin": {
+        "version": "v4.5.1"
+    },
+    "behat/mink": {
+        "version": "v1.7.1"
+    },
+    "behat/mink-browserkit-driver": {
+        "version": "v1.3.2"
+    },
+    "behat/mink-extension": {
+        "version": "2.3.1"
+    },
+    "behat/mink-goutte-driver": {
+        "version": "v1.2.1"
+    },
+    "behat/transliterator": {
+        "version": "v1.2.0"
+    },
+    "container-interop/container-interop": {
+        "version": "1.2.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -32,6 +56,18 @@
             "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
         }
     },
+    "fabpot/goutte": {
+        "version": "v3.2.2"
+    },
+    "guzzlehttp/guzzle": {
+        "version": "6.3.2"
+    },
+    "guzzlehttp/promises": {
+        "version": "v1.3.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.4.2"
+    },
     "monolog/monolog": {
         "version": "1.23.0"
     },
@@ -40,6 +76,9 @@
     },
     "psr/container": {
         "version": "1.0.0"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
     },
     "psr/log": {
         "version": "1.0.2"
@@ -56,8 +95,14 @@
             "ref": "aaddfdf43cdecd4cf91f992052d76c2cadc04543"
         }
     },
+    "symfony/browser-kit": {
+        "version": "v3.4.6"
+    },
     "symfony/cache": {
         "version": "v4.0.6"
+    },
+    "symfony/class-loader": {
+        "version": "v3.4.6"
     },
     "symfony/config": {
         "version": "v4.0.6"
@@ -70,6 +115,9 @@
             "version": "3.3",
             "ref": "e3868d2f4a5104f19f844fe551099a00c6562527"
         }
+    },
+    "symfony/css-selector": {
+        "version": "v3.4.6"
     },
     "symfony/debug": {
         "version": "v4.0.6"
@@ -88,6 +136,9 @@
     },
     "symfony/dependency-injection": {
         "version": "v4.0.6"
+    },
+    "symfony/dom-crawler": {
+        "version": "v3.4.6"
     },
     "symfony/dotenv": {
         "version": "v4.0.6"
@@ -169,6 +220,15 @@
     },
     "symfony/stopwatch": {
         "version": "v4.0.6"
+    },
+    "symfony/translation": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "6bcd6c570c017ea6ae5a7a6a027c929fd3542cd8"
+        }
     },
     "symfony/twig-bridge": {
         "version": "v4.0.6"
