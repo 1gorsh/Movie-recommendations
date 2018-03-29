@@ -22,7 +22,7 @@ final class RealRecommendationApi implements RecommendationApi
     private $httpClient;
 
     /**
-     * @var MovieHydrator
+     * @var Hydrator
      */
     private $hydrator;
 
@@ -43,7 +43,10 @@ final class RealRecommendationApi implements RecommendationApi
         $this->hydrator = $hydrator;
     }
 
-    private function sendRequest()
+    /**
+     * @return null|string
+     */
+    private function sendRequest(): ?string
     {
         try {
             $recommendations = $this->httpClient->get($this->url);

@@ -39,7 +39,7 @@ final class Genre
         return $this->name === (string) $genre;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }

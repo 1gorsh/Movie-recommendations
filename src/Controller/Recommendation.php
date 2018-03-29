@@ -27,10 +27,10 @@ final class Recommendation
     public function __invoke(Request $request, Recommendations $recommendationsRepository, Environment $twig): Response
     {
         try {
-            $genre = new Genre($request->query->get('genre', ''));
-            $dateTime = new \DateTimeImmutable($request->query->get('time', 'now'));
-            $recommendations = $recommendationsRepository
-                ->findByGenreAndTime($genre, $dateTime);
+            $recommendations = $recommendationsRepository->findByGenreAndTime(
+                new Genre($request->query->get('genre', '')),
+                new \DateTimeImmutable($request->query->get('time', 'now'))
+            );
         } catch(ApiException|\RuntimeException $e) {
             // would be good to add some flash message about api communication/bad response problem
             $recommendations = [];
